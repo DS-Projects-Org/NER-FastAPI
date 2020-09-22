@@ -1,0 +1,12 @@
+# server tools
+
+fastapi==0.58.1
+gunicorn==20.0.4
+uvicorn==0.11.5
+
+# model requirements
+
+tensorflow
+pyyaml
+h5py
+pickle
