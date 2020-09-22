@@ -21,7 +21,7 @@ import numpy as np
 import tensorflow as tf
 from fastapi import FastAPI
 
-fapi = FastAPI()
+app = FastAPI()
 
 # load saved model
 model = tf.keras.models.load_model("NER-BiLSTM.h5")
@@ -49,7 +49,7 @@ tags = ['B- Geographical Entity',
         'O']
 
 
-@fapi.get("/predict/{text}")
+@app.get("/predict/{text}")
 async def create_test_input_from_text(text):
     word_list = text.split(" ")
     x_new = []
@@ -66,3 +66,12 @@ async def create_test_input_from_text(text):
         result += "{:20}\t{}".format(word_list[w], tags[pred])
 
     return result
+
+
+@app.get("/")
+async def welcome():
+    wel = ""
+    wel += "Welcome to Named Entity Recongnition with Deep Learning API\n\n"
+    wel += "to get started checkout https://frozen-coast-03690.herokuapp.com/docs\n\n\n"
+    wel += "Trained and Created by Abubakar Yagoub (Blacksuan19)"
+    return wel
