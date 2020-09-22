@@ -19,7 +19,8 @@ import pickle as pk
 
 import numpy as np
 import tensorflow as tf
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
@@ -49,29 +50,57 @@ tags = ['B- Geographical Entity',
         'O']
 
 
-@app.get("/predict/{text}")
-async def create_test_input_from_text(text):
+@app.get("/classify/{text}")
+async def classify_text_entities(text: str):
+    """
+        perform named entity recognition on passed text
+    """
     word_list = text.split(" ")
     x_new = []
     for word in word_list:
-        x_new.append(word_idx[word])
+        if word not in word_idx:
+            raise HTTPException(
+                status_code=400, detail="word not in words index(make sure to capitalize the first letter if its a name)!")
+        else:
+            x_new.append(word_idx[word])
 
     p = model.predict(np.array([x_new]))
     p = np.argmax(p, axis=-1)
     result = ""
-    result += "{:20}\t{}\n".format("Word", "Prediction")
-    result += "-" * 35
-
+    result += "{:23}{}\n".format("Word", "Prediction")
+    result += "-" * 35 + "\n"
     for (w, pred) in zip(range(len(x_new)), p[0]):
-        result += "{:20}\t{}".format(word_list[w], tags[pred])
+        result += "{:20}\t{}\n".format(word_list[w], tags[pred])
 
-    return result
+    return HTMLResponse(content=result)
 
 
 @app.get("/")
 async def welcome():
-    wel = ""
-    wel += "Welcome to Named Entity Recongnition with Deep Learning API\n\n"
-    wel += "to get started checkout https://frozen-coast-03690.herokuapp.com/docs\n\n\n"
-    wel += "Trained and Created by Abubakar Yagoub (Blacksuan19)"
-    return wel
+    wel = """<html>
+                <head>
+                    <title>NER BiLSTM API</title>
+                </head>
+                <body>
+                    <p>
+                        Welcome to Named Entity Recongnition with Deep Learning API<br>
+                        to get started checkout
+                        <a href="https://frozen-coast-03690.herokuapp.com/docs">the
+                        docs</a><br> <br> <br>
+                        Usage example: <br>
+                            curl -X GET
+                            "https://frozen-coast-03690.herokuapp.com/classify/Ali is
+                            swimming" <br><br>
+                        Example response:<br> <br>
+                            Word  &emsp;  &emsp;  &emsp;  &emsp; &emsp;          Prediction <br>
+                            ----------------------------------- <br>
+                            Ali &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;     I-Person <br>
+                            is &emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;           O <br>
+                            swimming &emsp;   &emsp;  &emsp;          O <br>
+                        <br><br><br><br><br><br>
+                        <h6>Created by Abubakar Yagoub (Blacksuan19)</h6>
+                    </p>
+                </body>
+            </html>
+    """
+    return HTMLResponse(content=wel, status_code=200)
