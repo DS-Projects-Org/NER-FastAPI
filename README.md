@@ -25,9 +25,11 @@ curl -X GET "https://frozen-coast-03690.herokuapp.com/classify/Ali is swimming"
 
 ### Directory structure
 
-├── main.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=> main program file with API implementation <br>
-├── NER-BiLSTM.h5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=> trained tensorflow model <br>
-├── Procfile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=> heroku service file <br>
-├── README.md &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=> ... <br>
-├── requirements.txt &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=> required pip packages <br>
-└── word_idx.obj &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=> list of all words in used corpus <br>
+<pre>
+├── main.py             => main program file with API implementation
+├── NER-BiLSTM.h5       => trained tensorflow model
+├── Procfile            => heroku service file
+├── README.md           => ...
+├── requirements.txt    => required pip packages
+└── word_idx.obj        => list of all words in used corpus
+</pre>
