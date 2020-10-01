@@ -30,7 +30,6 @@ model = tf.keras.models.load_model("NER-BiLSTM.h5")
 # load saved words index
 word_idx = pk.load(open("word_idx.obj", "rb"))
 
-# word tags (TODO: convert to human readable format)
 tags = ['B- Geographical Entity',
         'I-Organization',
         'I-Time indicator',
