@@ -54,7 +54,7 @@ async def classify_text_entities(text: str):
     """
         perform named entity recognition on passed text
     """
-    word_list = text.split(" ")
+    word_list = text.strip().split(" ")
     x_new = []
     for word in word_list:
         if word not in word_idx:
