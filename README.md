@@ -2,16 +2,23 @@
 
 ## Model
 
-- The used dataset is provided by [kaggle](https://kutt.it/udr2g1)
-- The model is build using Keras Deep learning API, you can find the implementation in [this
-  kaggle notebook](https://kutt.it/bW4pgW)
+- Dataset is provided by [kaggle](https://kutt.it/udr2g1)
+- model build using Keras Deep learning API, implemented in [this kaggle notebook](https://kutt.it/bW4pgW)
 
 ## Usage
 
-- Example Usage
-
 ```bash
-curl -X GET "https://frozen-coast-03690.herokuapp.com/classify/Ali is swimming"
+curl -X GET "http://127.0.0.1:8000/classify/Ali%20is%20swimming"
+```
+
+- response
+
+```json
+{
+  "Ali": "I-Person",
+  "is": "O",
+  "swimming": "O"
+}
 ```
 
 - The API is hosted on a heroku instance for easier access

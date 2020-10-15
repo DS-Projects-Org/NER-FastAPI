@@ -65,13 +65,11 @@ async def classify_text_entities(text: str):
 
     p = model.predict(np.array([x_new]))
     p = np.argmax(p, axis=-1)
-    result = ""
-    result += "{:23}{}\n".format("Word", "Prediction")
-    result += "-" * 35 + "\n"
+    result = {}
     for (w, pred) in zip(range(len(x_new)), p[0]):
-        result += "{:20}\t{}\n".format(word_list[w], tags[pred])
+        result[word_list[w]] = tags[pred]
 
-    return HTMLResponse(content=result)
+    return result
 
 
 @app.get("/")
@@ -87,16 +85,16 @@ async def welcome():
                         <a href="https://frozen-coast-03690.herokuapp.com/docs">the
                         docs</a><br> <br> <br>
                         Usage example: <br>
-                            curl -X GET
-                            "https://frozen-coast-03690.herokuapp.com/classify/Ali is
-                            swimming" <br><br>
+                            <code>curl -X GET "https://frozen-coast-03690.herokuapp.com/classify/Ali%20is%20swimming"</code> <br><br>
                         Example response:<br> <br>
-                            Word  &emsp;  &emsp;  &emsp;  &emsp; &emsp;          Prediction <br>
-                            ----------------------------------- <br>
-                            Ali &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;     I-Person <br>
-                            is &emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;           O <br>
-                            swimming &emsp;   &emsp;  &emsp;          O <br>
-                        <br><br><br><br><br><br>
+                        <pre>
+                        {
+                            "Word":"Prediction",
+                            "Ali":"I-Person",
+                            "is":"O",
+                            "swimming":"O"
+                        }
+                        </pre>
                         <h6>Created by Abubakar Yagoub (Blacksuan19)</h6>
                     </p>
                 </body>
