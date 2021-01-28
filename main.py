@@ -59,7 +59,7 @@ async def classify_text_entities(text: str):
     for word in word_list:
         if word not in word_idx:
             raise HTTPException(
-                status_code=400, detail=f"word {word} not in words index(make sure to capitalize the first letter if its a name)!")
+                status_code=400, detail=f"word '{word}' not in words index (make sure to capitalize the first letter if its a name)!")
         else:
             x_new.append(word_idx[word])
 
